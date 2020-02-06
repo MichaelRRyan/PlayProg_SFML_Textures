@@ -80,7 +80,7 @@ GLuint	index,		//Index to draw
 //const string filename = "texture.tga";
 //const string filename = "cube.tga";
 
-const string filename = "abstract.tga";
+const string filename = "cube.tga";
 
 int width; //width of texture
 int height; //height of texture
@@ -129,7 +129,6 @@ void Game::initialize()
 	baseVertices[5].coordinate[0] = 1.0f;
 	baseVertices[5].coordinate[1] = -1.0f;
 	baseVertices[5].coordinate[2] = -1.0f;
-
 
 	baseVertices[6].coordinate[0] = 1.0f;
 	baseVertices[6].coordinate[1] = 1.0f;
@@ -181,29 +180,29 @@ void Game::initialize()
 	baseVertices[7].color[3] = 1.0f;
 
 	// Texels
-	baseVertices[0].texel[0] = 0.0f;
-	baseVertices[0].texel[1] = 0.0f;
+	baseVertices[0].texel[0] = 0.25f;
+	baseVertices[0].texel[1] = 0.50f;
 
-	baseVertices[1].texel[0] = 0.0f;
-	baseVertices[1].texel[1] = 1.0f;
+	baseVertices[1].texel[0] = 0.25f;
+	baseVertices[1].texel[1] = 0.25f;
 
-	baseVertices[2].texel[0] = 1.0f;
-	baseVertices[2].texel[1] = 1.0f;
+	baseVertices[2].texel[0] = 0.50f;
+	baseVertices[2].texel[1] = 0.25f;
 
-	baseVertices[3].texel[0] = 1.0f;
-	baseVertices[3].texel[1] = 0.0f;
+	baseVertices[3].texel[0] = 0.50f;
+	baseVertices[3].texel[1] = 0.50f;
 
-	baseVertices[4].texel[0] = 0.0f;
-	baseVertices[4].texel[1] = 0.0f;
+	baseVertices[4].texel[0] = 0.75f;
+	baseVertices[4].texel[1] = 0.50f;
 
-	baseVertices[5].texel[0] = 0.0f;
-	baseVertices[5].texel[1] = 1.0f;
+	baseVertices[5].texel[0] = 1.0f;
+	baseVertices[5].texel[1] = 0.50f;
 
 	baseVertices[6].texel[0] = 1.0f;
-	baseVertices[6].texel[1] = 1.0f;
+	baseVertices[6].texel[1] = 0.25f;
 
-	baseVertices[7].texel[0] = 1.0f;
-	baseVertices[7].texel[1] = 0.0f;
+	baseVertices[7].texel[0] = 0.75f;
+	baseVertices[7].texel[1] = 0.25f;
 
 
 	for (int i = 0; i < NUMBER_OF_POINTS; i++)
