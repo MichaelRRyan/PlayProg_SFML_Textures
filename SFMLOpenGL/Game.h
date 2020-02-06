@@ -9,15 +9,14 @@
 #include <SFML/Window.hpp>
 #include <SFML/OpenGL.hpp>
 
-#include <Vector3.h>
-#include <Matrix3.h>
+#include <Vector3f.h>
+#include <Matrix3f.h>
 
 #define STB_IMAGE_IMPLEMENTATION
 #include <stb_image.h>
 
 using namespace std;
 using namespace sf;
-using namespace gpp;
 
 class Game
 {
@@ -36,7 +35,8 @@ private:
 	Clock clock;
 	Time elapsed;
 
-	float rotationAngle = 0.0f;
+	cube::Vector3f m_rotations;
+	float m_scale;
 };
 
 #endif

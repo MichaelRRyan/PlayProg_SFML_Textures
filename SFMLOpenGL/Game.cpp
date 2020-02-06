@@ -2,7 +2,10 @@
 
 static bool flip;
 
-Game::Game() : window(VideoMode(800, 600), "OpenGL Cube Texturing")
+Game::Game() :
+	window(VideoMode(800, 600), "OpenGL Cube Texturing"),
+	m_rotations{ 0.0f, 0.0f, 0.0f },
+	m_scale{ 50.0f }
 {
 }
 
@@ -34,6 +37,8 @@ void Game::run()
 
 }
 
+const int NUMBER_OF_POINTS{ 8 };
+
 typedef struct
 {
 	float coordinate[3];
@@ -41,8 +46,8 @@ typedef struct
 	float texel[2];
 } Vertex;
 
-Vertex baseVertices[8]; // Cube corner positions and data
-Vertex vertices[8];
+Vertex baseVertices[NUMBER_OF_POINTS]; // Cube corner positions and data
+Vertex vertices[NUMBER_OF_POINTS];
 GLubyte triangles[36] // Triangle indices
 {
 	1, 5, 6,
@@ -95,6 +100,8 @@ void Game::initialize()
 	DEBUG_MSG(glGetString(GL_VENDOR));
 	DEBUG_MSG(glGetString(GL_RENDERER));
 	DEBUG_MSG(glGetString(GL_VERSION));
+
+	glEnable(GL_CULL_FACE);
 
 	/* Vertices counter-clockwise winding */
 	// Coordinate
@@ -174,25 +181,36 @@ void Game::initialize()
 	baseVertices[7].color[3] = 1.0f;
 
 	// Texels
-	// NEEDS TO BE SET UP
 	baseVertices[0].texel[0] = 0.0f;
 	baseVertices[0].texel[1] = 0.0f;
 
-	baseVertices[1].texel[0] = 0.85f;
-	baseVertices[1].texel[1] = 0.0f;
+	baseVertices[1].texel[0] = 0.0f;
+	baseVertices[1].texel[1] = 1.0f;
 
-	baseVertices[2].texel[0] = 0.85f;
-	baseVertices[2].texel[1] = 0.85f;
+	baseVertices[2].texel[0] = 1.0f;
+	baseVertices[2].texel[1] = 1.0f;
 
-	baseVertices[3].texel[0] = 0.0f;
-	baseVertices[3].texel[1] = 0.85;
+	baseVertices[3].texel[0] = 1.0f;
+	baseVertices[3].texel[1] = 0.0f;
+
+	baseVertices[4].texel[0] = 0.0f;
+	baseVertices[4].texel[1] = 0.0f;
+
+	baseVertices[5].texel[0] = 0.0f;
+	baseVertices[5].texel[1] = 1.0f;
+
+	baseVertices[6].texel[0] = 1.0f;
+	baseVertices[6].texel[1] = 1.0f;
+
+	baseVertices[7].texel[0] = 1.0f;
+	baseVertices[7].texel[1] = 0.0f;
 
 
-	for (int i = 0; i < 8; i++)
+	for (int i = 0; i < NUMBER_OF_POINTS; i++)
 	{
 		for (int j = 0; j < 3; j++)
 		{
-			vertices[i].coordinate[j] = baseVertices[i].coordinate[j] / 2.0f;
+			vertices[i].coordinate[j] = baseVertices[i].coordinate[j];
 			vertices[i].color[j] = baseVertices[i].color[j];
 			vertices[i].texel[j] = baseVertices[i].texel[j];
 		}
@@ -252,7 +270,7 @@ void Game::initialize()
 		"out vec4 fColor;"
 		"void main() {"
 		//"	fColor = vec4(0.0f, 1.0f, 0.0f, 1.0f);"
-		"	fColor = texture(f_texture, texel.st);"
+		"	fColor = color + texture(f_texture, texel.st);"
 		"}"; //Fragment Shader Src
 
 	DEBUG_MSG("Setting Up Fragment Shader");
@@ -337,29 +355,52 @@ void Game::update()
 {
 	elapsed = clock.getElapsedTime();
 
-	if (elapsed.asSeconds() >= 1.0f)
+	if (elapsed.asSeconds() >= 1.0f / 60.0f)
 	{
 		clock.restart();
 
-		if (!flip)
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::LShift))
 		{
-			flip = true;
+			m_scale += 10.0f;
 		}
-		else
-			flip = false;
-	}
-
-	if (flip)
-	{
-		rotationAngle += 0.005f;
-
-		if (rotationAngle > 360.0f)
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::LControl))
 		{
-			rotationAngle -= 360.0f;
+			m_scale -= 10.0f;
 		}
-	}
 
-	
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::X))
+		{
+			m_rotations.x += 0.8f;
+		}
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Y))
+		{
+			m_rotations.y += 0.8f;
+		}
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Z))
+		{
+			m_rotations.z += 0.8f;
+		}
+
+		cube::Matrix3f transformationMatrix{ 1.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 1.0f };
+
+		transformationMatrix = transformationMatrix * cube::Matrix3f::Scale(m_scale, m_scale);
+
+		transformationMatrix = transformationMatrix * cube::Matrix3f::RotationX(m_rotations.x);
+		transformationMatrix = transformationMatrix * cube::Matrix3f::RotationY(m_rotations.y);
+		transformationMatrix = transformationMatrix * cube::Matrix3f::RotationZ(m_rotations.z);
+
+		for (int i = 0; i < NUMBER_OF_POINTS; i++)
+		{
+			cube::Vector3f vector{ baseVertices[i].coordinate[0], baseVertices[i].coordinate[1], baseVertices[i].coordinate[2] };
+
+			vector = transformationMatrix * vector;
+
+			vertices[i].coordinate[0] = vector.x;
+			vertices[i].coordinate[1] = vector.y;
+			vertices[i].coordinate[2] = vector.z;
+		}
+
+	}
 
 #if (DEBUG >= 2)
 	DEBUG_MSG("Update up...");
