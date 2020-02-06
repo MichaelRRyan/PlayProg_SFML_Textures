@@ -37,7 +37,7 @@ void Game::run()
 
 }
 
-const int NUMBER_OF_POINTS{ 8 };
+const int NUMBER_OF_POINTS{ 24 };
 
 typedef struct
 {
@@ -50,17 +50,17 @@ Vertex baseVertices[NUMBER_OF_POINTS]; // Cube corner positions and data
 Vertex vertices[NUMBER_OF_POINTS];
 GLubyte triangles[36] // Triangle indices
 {
-	1, 5, 6,
-	6, 2, 1,
-	4, 0, 3,
-	3, 7, 4,
-	3, 2, 6,
-	6, 7, 3,
-	0, 4, 5,
-	5, 1, 0,
-	0, 1, 2,
+	0, 1, 2, // Front
 	2, 3, 0,
-	4, 7, 6,
+	16, 17, 18, // Top
+	18, 19, 16,
+	20, 21, 22, // Bottom
+	22, 23, 20,
+	8, 9, 10, // Right
+	10, 11, 8,
+	12, 13, 14, // Left
+	14, 15, 12,
+	4, 7, 6, // Back
 	6, 5, 4
 };
 
@@ -121,7 +121,6 @@ void Game::initialize()
 	baseVertices[3].coordinate[1] = 1.0f;
 	baseVertices[3].coordinate[2] = 1.0f;
 
-
 	baseVertices[4].coordinate[0] = -1.0f;
 	baseVertices[4].coordinate[1] = -1.0f;
 	baseVertices[4].coordinate[2] = -1.0f;
@@ -137,6 +136,202 @@ void Game::initialize()
 	baseVertices[7].coordinate[0] = -1.0f;
 	baseVertices[7].coordinate[1] = 1.0f;
 	baseVertices[7].coordinate[2] = -1.0f;
+
+	// Right
+	baseVertices[8].coordinate[0] = baseVertices[2].coordinate[0];
+	baseVertices[8].coordinate[1] = baseVertices[2].coordinate[1];
+	baseVertices[8].coordinate[2] = baseVertices[2].coordinate[2];
+
+	baseVertices[9].coordinate[0] = baseVertices[1].coordinate[0];
+	baseVertices[9].coordinate[1] = baseVertices[1].coordinate[1];
+	baseVertices[9].coordinate[2] = baseVertices[1].coordinate[2];
+
+	baseVertices[10].coordinate[0] = baseVertices[5].coordinate[0];
+	baseVertices[10].coordinate[1] = baseVertices[5].coordinate[1];
+	baseVertices[10].coordinate[2] = baseVertices[5].coordinate[2];
+
+	baseVertices[11].coordinate[0] = baseVertices[6].coordinate[0];
+	baseVertices[11].coordinate[1] = baseVertices[6].coordinate[1];
+	baseVertices[11].coordinate[2] = baseVertices[6].coordinate[2];
+
+	baseVertices[8].color[0] = 1.0f;
+	baseVertices[8].color[1] = 0.0f;
+	baseVertices[8].color[2] = 1.0f;
+	baseVertices[8].color[3] = 1.0f;
+
+	baseVertices[9].color[0] = 0.0f;
+	baseVertices[9].color[1] = 1.0f;
+	baseVertices[9].color[2] = 1.0f;
+	baseVertices[9].color[3] = 1.0f;
+
+	baseVertices[10].color[0] = 0.0f;
+	baseVertices[10].color[1] = 0.5f;
+	baseVertices[10].color[2] = 0.5f;
+	baseVertices[10].color[3] = 1.0f;
+
+	baseVertices[11].color[0] = 0.5f;
+	baseVertices[11].color[1] = 0.5f;
+	baseVertices[11].color[2] = 0.5f;
+	baseVertices[11].color[3] = 1.0f;
+
+	baseVertices[8].texel[0] = 0.50f;
+	baseVertices[8].texel[1] = 0.25f;
+
+	baseVertices[9].texel[0] = 0.50f;
+	baseVertices[9].texel[1] = 0.50f;
+
+	baseVertices[10].texel[0] = 0.75f;
+	baseVertices[10].texel[1] = 0.50f;
+
+	baseVertices[11].texel[0] = 0.75f;
+	baseVertices[11].texel[1] = 0.25f;
+
+	// Left
+	baseVertices[12].coordinate[0] = baseVertices[0].coordinate[0];
+	baseVertices[12].coordinate[1] = baseVertices[0].coordinate[1];
+	baseVertices[12].coordinate[2] = baseVertices[0].coordinate[2];
+
+	baseVertices[13].coordinate[0] = baseVertices[3].coordinate[0];
+	baseVertices[13].coordinate[1] = baseVertices[3].coordinate[1];
+	baseVertices[13].coordinate[2] = baseVertices[3].coordinate[2];
+
+	baseVertices[14].coordinate[0] = baseVertices[7].coordinate[0];
+	baseVertices[14].coordinate[1] = baseVertices[7].coordinate[1];
+	baseVertices[14].coordinate[2] = baseVertices[7].coordinate[2];
+
+	baseVertices[15].coordinate[0] = baseVertices[4].coordinate[0];
+	baseVertices[15].coordinate[1] = baseVertices[4].coordinate[1];
+	baseVertices[15].coordinate[2] = baseVertices[4].coordinate[2];
+
+	baseVertices[12].color[0] = 1.0f;
+	baseVertices[12].color[1] = 0.0f;
+	baseVertices[12].color[2] = 1.0f;
+	baseVertices[12].color[3] = 1.0f;
+
+	baseVertices[13].color[0] = 0.0f;
+	baseVertices[13].color[1] = 1.0f;
+	baseVertices[13].color[2] = 1.0f;
+	baseVertices[13].color[3] = 1.0f;
+
+	baseVertices[14].color[0] = 0.0f;
+	baseVertices[14].color[1] = 0.5f;
+	baseVertices[14].color[2] = 0.5f;
+	baseVertices[14].color[3] = 1.0f;
+
+	baseVertices[15].color[0] = 0.5f;
+	baseVertices[15].color[1] = 0.5f;
+	baseVertices[15].color[2] = 0.5f;
+	baseVertices[15].color[3] = 1.0f;
+
+	baseVertices[12].texel[0] = 0.25f;
+	baseVertices[12].texel[1] = 0.50f;
+
+	baseVertices[13].texel[0] = 0.25f;
+	baseVertices[13].texel[1] = 0.25f;
+
+	baseVertices[14].texel[0] = 0.0f;
+	baseVertices[14].texel[1] = 0.25f;
+
+	baseVertices[15].texel[0] = 0.0f;
+	baseVertices[15].texel[1] = 0.50f;
+
+	// Top
+	baseVertices[16].coordinate[0] = baseVertices[3].coordinate[0];
+	baseVertices[16].coordinate[1] = baseVertices[3].coordinate[1];
+	baseVertices[16].coordinate[2] = baseVertices[3].coordinate[2];
+
+	baseVertices[17].coordinate[0] = baseVertices[2].coordinate[0];
+	baseVertices[17].coordinate[1] = baseVertices[2].coordinate[1];
+	baseVertices[17].coordinate[2] = baseVertices[2].coordinate[2];
+
+	baseVertices[18].coordinate[0] = baseVertices[6].coordinate[0];
+	baseVertices[18].coordinate[1] = baseVertices[6].coordinate[1];
+	baseVertices[18].coordinate[2] = baseVertices[6].coordinate[2];
+
+	baseVertices[19].coordinate[0] = baseVertices[7].coordinate[0];
+	baseVertices[19].coordinate[1] = baseVertices[7].coordinate[1];
+	baseVertices[19].coordinate[2] = baseVertices[7].coordinate[2];
+
+	baseVertices[16].color[0] = 1.0f;
+	baseVertices[16].color[1] = 0.0f;
+	baseVertices[16].color[2] = 1.0f;
+	baseVertices[16].color[3] = 1.0f;
+
+	baseVertices[17].color[0] = 0.0f;
+	baseVertices[17].color[1] = 1.0f;
+	baseVertices[17].color[2] = 1.0f;
+	baseVertices[17].color[3] = 1.0f;
+
+	baseVertices[18].color[0] = 0.0f;
+	baseVertices[18].color[1] = 0.5f;
+	baseVertices[18].color[2] = 0.5f;
+	baseVertices[18].color[3] = 1.0f;
+
+	baseVertices[19].color[0] = 0.5f;
+	baseVertices[19].color[1] = 0.5f;
+	baseVertices[19].color[2] = 0.5f;
+	baseVertices[19].color[3] = 1.0f;
+
+	baseVertices[16].texel[0] = 0.25f;
+	baseVertices[16].texel[1] = 0.25f;
+
+	baseVertices[17].texel[0] = 0.50f;
+	baseVertices[17].texel[1] = 0.25f;
+
+	baseVertices[18].texel[0] = 0.50f;
+	baseVertices[18].texel[1] = 0.0f;
+
+	baseVertices[19].texel[0] = 0.25f;
+	baseVertices[19].texel[1] = 0.0f;
+
+	// Bottom
+	baseVertices[20].coordinate[0] = baseVertices[1].coordinate[0];
+	baseVertices[20].coordinate[1] = baseVertices[1].coordinate[1];
+	baseVertices[20].coordinate[2] = baseVertices[1].coordinate[2];
+
+	baseVertices[21].coordinate[0] = baseVertices[0].coordinate[0];
+	baseVertices[21].coordinate[1] = baseVertices[0].coordinate[1];
+	baseVertices[21].coordinate[2] = baseVertices[0].coordinate[2];
+
+	baseVertices[22].coordinate[0] = baseVertices[4].coordinate[0];
+	baseVertices[22].coordinate[1] = baseVertices[4].coordinate[1];
+	baseVertices[22].coordinate[2] = baseVertices[4].coordinate[2];
+
+	baseVertices[23].coordinate[0] = baseVertices[5].coordinate[0];
+	baseVertices[23].coordinate[1] = baseVertices[5].coordinate[1];
+	baseVertices[23].coordinate[2] = baseVertices[5].coordinate[2];
+
+	baseVertices[20].color[0] = 1.0f;
+	baseVertices[20].color[1] = 0.0f;
+	baseVertices[20].color[2] = 1.0f;
+	baseVertices[20].color[3] = 1.0f;
+
+	baseVertices[21].color[0] = 0.0f;
+	baseVertices[21].color[1] = 1.0f;
+	baseVertices[21].color[2] = 1.0f;
+	baseVertices[21].color[3] = 1.0f;
+
+	baseVertices[22].color[0] = 0.0f;
+	baseVertices[22].color[1] = 0.5f;
+	baseVertices[22].color[2] = 0.5f;
+	baseVertices[22].color[3] = 1.0f;
+
+	baseVertices[23].color[0] = 0.5f;
+	baseVertices[23].color[1] = 0.5f;
+	baseVertices[23].color[2] = 0.5f;
+	baseVertices[23].color[3] = 1.0f;
+
+	baseVertices[20].texel[0] = 0.50f;
+	baseVertices[20].texel[1] = 0.50f;
+
+	baseVertices[21].texel[0] = 0.25f;
+	baseVertices[21].texel[1] = 0.50f;
+
+	baseVertices[22].texel[0] = 0.25f;
+	baseVertices[22].texel[1] = 0.75f;
+
+	baseVertices[23].texel[0] = 0.50f;
+	baseVertices[23].texel[1] = 0.75f;
 
 	// Colours
 	baseVertices[0].color[0] = 1.0f;
