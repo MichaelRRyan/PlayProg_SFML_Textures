@@ -399,7 +399,7 @@ void Game::initialize()
 	baseVertices[7].texel[0] = 0.75f;
 	baseVertices[7].texel[1] = 0.25f;
 
-
+	// Copy points to active array
 	for (int i = 0; i < NUMBER_OF_POINTS; i++)
 	{
 		for (int j = 0; j < 3; j++)
@@ -559,14 +559,17 @@ void Game::update()
 			m_rotations.z += 0.8f;
 		}
 
+		// Create a identity matrix
 		cube::Matrix3f transformationMatrix{ 1.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 1.0f };
 
+		// Apply transformations to the matrix
 		transformationMatrix = transformationMatrix * cube::Matrix3f::Scale3D(m_scale);
 
 		transformationMatrix = transformationMatrix * cube::Matrix3f::RotationX(m_rotations.x);
 		transformationMatrix = transformationMatrix * cube::Matrix3f::RotationY(m_rotations.y);
 		transformationMatrix = transformationMatrix * cube::Matrix3f::RotationZ(m_rotations.z);
 
+		// Apply transformation matrix to the points
 		for (int i = 0; i < NUMBER_OF_POINTS; i++)
 		{
 			cube::Vector3f vector{ baseVertices[i].coordinate[0], baseVertices[i].coordinate[1], baseVertices[i].coordinate[2] };
