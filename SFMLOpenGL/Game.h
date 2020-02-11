@@ -11,6 +11,7 @@
 
 #include <Vector3f.h>
 #include <Matrix3f.h>
+#include <ShaderReader.h>
 
 #define STB_IMAGE_IMPLEMENTATION
 #include <stb_image.h>
